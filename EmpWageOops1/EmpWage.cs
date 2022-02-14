@@ -16,13 +16,24 @@ namespace EmpWageOops1
         const int NUM_OF_WORKING_DAYS = 20;
         int totalDayWorked;
         int monthlyWage;
+        int totalHourWorked;
 
         Random random = new Random();
         public EmpWage()
         {
+            totalHourWorked = 0;
             totalDayWorked = 0;
             monthlyWage = 0;
         }
+
+        public void Reset()
+        {
+            totalDayWorked = 0;
+            totalHourWorked = 0;
+            monthlyWage = 0;
+
+        }
+
 
 
         private int GetAttendance()
@@ -113,6 +124,28 @@ namespace EmpWageOops1
 
 
         }
+        public void Condition()
+        {
+            while (totalDayWorked != 20 && totalHourWorked < 100)
+            {
+                Reset();
+                MonthlyWage();
+            }
+        }
 
+        public void Display()
+        {
+            Console.WriteLine("Total Hours worked: " + totalHourWorked);
+            Console.WriteLine("Total Days worked: " + totalDayWorked);
+            Console.WriteLine("Monthly Wage: " + monthlyWage);
+            Console.ReadLine();
+
+
+        }
+
+        public override string ToString()
+        {
+            return "Total Hours: " + totalHourWorked + "; Total Days: " + totalDayWorked + "; Total Wage: " + monthlyWage;
+        }
     }    
 }

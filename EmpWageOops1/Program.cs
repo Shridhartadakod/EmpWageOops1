@@ -11,6 +11,11 @@ namespace EmpWageOops1
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to oops concept");
+
+            EmpWage employee = new EmpWage();
+            employee.Condition();
+            employee.Display();
+            Console.ReadLine();
         }
     }
 }
