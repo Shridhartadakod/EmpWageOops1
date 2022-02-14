@@ -13,17 +13,31 @@ namespace EmpWageOops1
         const int IS_PRESENT = 1;
         const int IS_ABSENT = 0;
         const int Emp_RATE_PER_Hour = 20;
-
+        const int NUM_OF_WORKING_DAYS = 20;
+        int totalDayWorked;
+        int monthlyWage;
 
         Random random = new Random();
-        public void GetAttendance()
+        public EmpWage()
+        {
+            totalDayWorked = 0;
+            monthlyWage = 0;
+        }
+
+
+        private int GetAttendance()
         {
 
             int checkAttendance = random.Next(0, 2);
             if (checkAttendance == IS_PRESENT)
-                Console.WriteLine("Is Present");
-            else if (checkAttendance == IS_ABSENT)
-                Console.WriteLine("Is Absent");
+            {
+                return IS_PRESENT;
+            }
+               
+            else
+            {
+                return IS_ABSENT;
+            } 
         }
         public void GetDailyWage()
         {
@@ -61,7 +75,7 @@ namespace EmpWageOops1
             Console.WriteLine("Employeewage = " + EmpWage);
             Console.ReadLine();
         }
-        public void SwitchCase()
+        private int SwitchCase()
         {
             int EmpHrs = 0;
             int EmpWage = 0;
@@ -83,8 +97,20 @@ namespace EmpWageOops1
                     break;
             }
             EmpWage = EmpHrs * Emp_RATE_PER_Hour;
-            Console.WriteLine("Employee Wage = " + EmpWage);
+            return EmpWage;
+
+        }
+        public void MonthlyWage()
+        {
+            for (int i = 0; i < NUM_OF_WORKING_DAYS; i++)
+                totalDayWorked += GetAttendance();
+            for (int j = 0; j < totalDayWorked; j++)
+            {
+                monthlyWage =monthlyWage+ SwitchCase();
+            }
+            Console.WriteLine("Monthly Wage: " + monthlyWage);
             Console.ReadLine();
+
 
         }
 
