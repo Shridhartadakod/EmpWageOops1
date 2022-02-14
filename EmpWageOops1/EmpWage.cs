@@ -12,7 +12,7 @@ namespace EmpWageOops1
         const int IS_PART_TIME = 0;
         const int IS_PRESENT = 1;
         const int IS_ABSENT = 0;
-        const int RATE_PER_HOUR = 20;
+        const int Emp_RATE_PER_Hour = 20;
 
        
         Random random = new Random();
@@ -35,8 +35,31 @@ namespace EmpWageOops1
                 dailyHours = 8;
             else if (empCheck == IS_PART_TIME)
                 dailyHours = 4;
-            dailyWage = dailyHours * RATE_PER_HOUR;
+            dailyWage = dailyHours * Emp_RATE_PER_Hour;
             Console.WriteLine("Daily Wage: " + dailyWage);
+        }
+        public void PartTimeEmpWage()
+        {
+            int EmpHrs = 0;
+            int EmpWage = 0;
+            Random random = new Random();
+            int EmpCheck = random.Next(0, 2);
+
+            if (EmpCheck == IS_FULL_TIME)
+            {
+                EmpHrs = 8;
+            }
+            else if (EmpCheck == IS_PART_TIME)
+            {
+                EmpHrs = 4;
+            }
+            else
+            {
+                EmpHrs = 0;
+            }
+            EmpWage = EmpHrs * Emp_RATE_PER_Hour;
+            Console.WriteLine("Employeewage = " + EmpWage);
+            Console.ReadLine();
         }
     }
 }
