@@ -12,18 +12,33 @@ namespace EmpWageOops1
         const int IS_PART_TIME = 0;
         const int IS_PRESENT = 1;
         const int IS_ABSENT = 0;
-        const int Emp_RATE_PER_Hour = 20;
-        const int NUM_OF_WORKING_DAYS = 20;
+        private readonly int RATE_PER_Hour = 20;
+
+        public int RATE_PER_HOUR { get; }
+
+        private readonly int WORKING_DAYS_PER_MONTH = 20;
+        private readonly int HOURS_PER_MONTH = 100;
+
         int totalDayWorked;
         int monthlyWage;
         int totalHourWorked;
 
         Random random = new Random();
-        public EmpWage()
+        public EmpWage(int ratePerHour)
         {
             totalHourWorked = 0;
             totalDayWorked = 0;
             monthlyWage = 0;
+        }
+        public EmpWage(int ratePerHour, int maxWorkingDays, int maxHoursPerMonth)
+        {
+            RATE_PER_HOUR = ratePerHour;
+            WORKING_DAYS_PER_MONTH = maxWorkingDays;
+            HOURS_PER_MONTH = maxHoursPerMonth;
+        }
+
+        public EmpWage()
+        {
         }
 
         public void Reset()
@@ -60,7 +75,7 @@ namespace EmpWageOops1
                 dailyHours = 8;
             else if (empCheck == IS_PART_TIME)
                 dailyHours = 4;
-            dailyWage = dailyHours * Emp_RATE_PER_Hour;
+            dailyWage = dailyHours * RATE_PER_Hour;
             Console.WriteLine("Daily Wage: " + dailyWage);
         }
         public void PartTimeEmpWage()
@@ -82,7 +97,7 @@ namespace EmpWageOops1
             {
                 EmpHrs = 0;
             }
-            EmpWage = EmpHrs * Emp_RATE_PER_Hour;
+            EmpWage = EmpHrs * RATE_PER_Hour;
             Console.WriteLine("Employeewage = " + EmpWage);
             Console.ReadLine();
         }
@@ -107,13 +122,13 @@ namespace EmpWageOops1
                     EmpHrs = 0;
                     break;
             }
-            EmpWage = EmpHrs * Emp_RATE_PER_Hour;
+            EmpWage = EmpHrs * RATE_PER_Hour;
             return EmpWage;
 
         }
         public void MonthlyWage()
         {
-            for (int i = 0; i < NUM_OF_WORKING_DAYS; i++)
+            for (int i = 0; i < WORKING_DAYS_PER_MONTH; i++)
                 totalDayWorked += GetAttendance();
             for (int j = 0; j < totalDayWorked; j++)
             {
