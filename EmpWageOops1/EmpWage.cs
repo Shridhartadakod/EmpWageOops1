@@ -14,11 +14,11 @@ namespace EmpWageOops1
         const int IS_ABSENT = 0;
         const int Emp_RATE_PER_Hour = 20;
 
-       
+
         Random random = new Random();
         public void GetAttendance()
         {
-          
+
             int checkAttendance = random.Next(0, 2);
             if (checkAttendance == IS_PRESENT)
                 Console.WriteLine("Is Present");
@@ -42,7 +42,7 @@ namespace EmpWageOops1
         {
             int EmpHrs = 0;
             int EmpWage = 0;
-            Random random = new Random();
+
             int EmpCheck = random.Next(0, 2);
 
             if (EmpCheck == IS_FULL_TIME)
@@ -61,5 +61,32 @@ namespace EmpWageOops1
             Console.WriteLine("Employeewage = " + EmpWage);
             Console.ReadLine();
         }
-    }
+        public void SwitchCase()
+        {
+            int EmpHrs = 0;
+            int EmpWage = 0;
+
+            int EmpCheck = random.Next(0, 2);
+
+            switch (EmpCheck)
+            {
+                case IS_PART_TIME:
+                    EmpHrs = 4;
+                    break;
+
+                case IS_FULL_TIME:
+                    EmpHrs = 8;
+                    break;
+
+                default:
+                    EmpHrs = 0;
+                    break;
+            }
+            EmpWage = EmpHrs * Emp_RATE_PER_Hour;
+            Console.WriteLine("Employee Wage = " + EmpWage);
+            Console.ReadLine();
+
+        }
+
+    }    
 }
