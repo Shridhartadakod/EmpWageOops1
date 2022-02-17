@@ -19,9 +19,6 @@ namespace EmpWageOops1
         private int monthlyWage;
         private int dailyWage;
         private int totalHoursWorked;
-        private int ratePerHour;
-        private int maxWorkingDays;
-        private int maxHoursPerMonth;
         private readonly string company;
 
         // Random object declared
@@ -41,8 +38,7 @@ namespace EmpWageOops1
             get { return monthlyWage; }
         }
 
-        
-       
+
         public EmpWage(string company)
         {
             totalDaysWorked = 0;
@@ -51,7 +47,7 @@ namespace EmpWageOops1
             this.company = company;
         }
 
-        
+
         public EmpWage(string companyName, int ratePerHour, int maxWorkingDays, int maxHoursPerMonth)
         {
             RATE_PER_HOUR = ratePerHour;
@@ -60,7 +56,7 @@ namespace EmpWageOops1
             company = companyName;
         }
 
-       
+
         private void Reset()
         {
             totalDaysWorked = 0;
@@ -69,12 +65,13 @@ namespace EmpWageOops1
             dailyWage = 0;
         }
 
+
         private static int GetAttendance()
         {
             return random.Next(0, 2);
         }
 
-       
+
         private int GetDailyWage()
         {
             int empCheck = random.Next(0, 2);
@@ -89,7 +86,6 @@ namespace EmpWageOops1
             return dailyWage;
         }
 
-        
         private void CalculateMonthlyWage()
         {
             for (int i = 0; i < WORKING_DAYS_PER_MONTH; i++)
@@ -98,7 +94,7 @@ namespace EmpWageOops1
                 monthlyWage += GetDailyWage();
         }
 
-       
+
         public void MeetWageCondition()
         {
             while (totalDaysWorked != WORKING_DAYS_PER_MONTH && totalHoursWorked < HOURS_PER_MONTH)
@@ -108,7 +104,7 @@ namespace EmpWageOops1
             }
         }
 
-       
+
         public void Display()
         {
             Console.WriteLine("Total Hours worked: " + totalHoursWorked);
@@ -117,9 +113,11 @@ namespace EmpWageOops1
             Console.WriteLine("Monthly Wage: " + monthlyWage);
         }
 
+
         public override string ToString()
         {
             return $"Total Wage: {TotalWage}; Daily Wage: {DailWage}";
         }
     }
+
 }

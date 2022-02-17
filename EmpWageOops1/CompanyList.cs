@@ -6,33 +6,42 @@ using System.Threading.Tasks;
 
 namespace EmpWageOops1
 {
-    internal class CompanyList
+    internal class CompanyList : CompanyWageInterface
     {
-        private Dictionary<string, EmpWage> companies;
 
-        
+        private readonly Dictionary<string, EmpWage> companies;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CompanyList"/> class.
+        /// </summary>
         public CompanyList()
         {
             companies = new();
         }
 
-        
         public void AddCompany(string companyName)
         {
-            companies.Add(companyName, new EmpWage());
-            companies[companyName].Condition();
+            companies.Add(companyName, new EmpWage(companyName));
+            ComputeWage(companyName);
         }
 
-        
+
         public void AddCompany(string companyName, int ratePerHour, int maxWorkingDays, int maxHoursPerMonth)
         {
-            companies.Add(companyName, new EmpWage(ratePerHour, maxWorkingDays, maxHoursPerMonth));
-            companies[companyName].Condition();
+            companies.Add(companyName, new EmpWage(companyName, ratePerHour, maxWorkingDays, maxHoursPerMonth));
+            ComputeWage(companyName);
         }
+
+        public void ComputeWage(string companyName)
+        {
+            companies[companyName].MeetWageCondition();
+        }
+
+
         public void Display()
         {
-            foreach (var company in companies)
-                Console.WriteLine("\nCompany: " + company.Key + "\n\tWage details:\n\t" + company.Value.ToString());
+            foreach (var company in companies.Values)
+                Console.WriteLine("\nCompany: " + company.Company + "\n" + company.ToString() + "\n");
         }
     }
 }
