@@ -8,159 +8,118 @@ namespace EmpWageOops1
 {
     internal class EmpWage
     {
-        const int IS_FULL_TIME = 1;
-        const int IS_PART_TIME = 0;
-        const int IS_PRESENT = 1;
-        const int IS_ABSENT = 0;
-        private readonly int RATE_PER_Hour = 20;
-
-        public int RATE_PER_HOUR { get; }
-
+        private const int IS_FULL_TIME = 1;
+        private const int IS_PART_TIME = 0;
+        private readonly int RATE_PER_HOUR = 20;
         private readonly int WORKING_DAYS_PER_MONTH = 20;
         private readonly int HOURS_PER_MONTH = 100;
 
-        int totalDayWorked;
-        int monthlyWage;
-        int totalHourWorked;
+        // Attributes of the class declared here
+        private int totalDaysWorked;
+        private int monthlyWage;
+        private int dailyWage;
+        private int totalHoursWorked;
+        private int ratePerHour;
+        private int maxWorkingDays;
+        private int maxHoursPerMonth;
+        private readonly string company;
 
-        Random random = new Random();
-        public EmpWage(int ratePerHour)
+        // Random object declared
+        private static readonly Random random = new Random();
+
+        // Properties
+        public string Company
         {
-            totalHourWorked = 0;
-            totalDayWorked = 0;
-            monthlyWage = 0;
+            get { return company; }
         }
-        public EmpWage(int ratePerHour, int maxWorkingDays, int maxHoursPerMonth)
+        public int DailWage
+        {
+            get { return dailyWage; }
+        }
+        public int TotalWage
+        {
+            get { return monthlyWage; }
+        }
+
+        
+       
+        public EmpWage(string company)
+        {
+            totalDaysWorked = 0;
+            monthlyWage = 0;
+            totalHoursWorked = 0;
+            this.company = company;
+        }
+
+        
+        public EmpWage(string companyName, int ratePerHour, int maxWorkingDays, int maxHoursPerMonth)
         {
             RATE_PER_HOUR = ratePerHour;
             WORKING_DAYS_PER_MONTH = maxWorkingDays;
             HOURS_PER_MONTH = maxHoursPerMonth;
+            company = companyName;
         }
 
-        public EmpWage()
+       
+        private void Reset()
         {
-        }
-
-        public void Reset()
-        {
-            totalDayWorked = 0;
-            totalHourWorked = 0;
+            totalDaysWorked = 0;
             monthlyWage = 0;
-
+            totalHoursWorked = 0;
+            dailyWage = 0;
         }
 
-
-
-        private int GetAttendance()
+        private static int GetAttendance()
         {
-
-            int checkAttendance = random.Next(0, 2);
-            if (checkAttendance == IS_PRESENT)
-            {
-                return IS_PRESENT;
-            }
-               
-            else
-            {
-                return IS_ABSENT;
-            } 
+            return random.Next(0, 2);
         }
-        public void GetDailyWage()
+
+       
+        private int GetDailyWage()
         {
-            int dailyWage = 0;
-            int dailyHours = 0;
-            Random random = new Random();
             int empCheck = random.Next(0, 2);
-            if (empCheck == IS_FULL_TIME)
-                dailyHours = 8;
-            else if (empCheck == IS_PART_TIME)
-                dailyHours = 4;
-            dailyWage = dailyHours * RATE_PER_Hour;
-            Console.WriteLine("Daily Wage: " + dailyWage);
+            int dailyHours = empCheck switch
+            {
+                IS_FULL_TIME => 8,
+                IS_PART_TIME => 4,
+                _ => 0,
+            };
+            totalHoursWorked += dailyHours;
+            dailyWage = dailyHours * RATE_PER_HOUR;
+            return dailyWage;
         }
-        public void PartTimeEmpWage()
-        {
-            int EmpHrs = 0;
-            int EmpWage = 0;
 
-            int EmpCheck = random.Next(0, 2);
-
-            if (EmpCheck == IS_FULL_TIME)
-            {
-                EmpHrs = 8;
-            }
-            else if (EmpCheck == IS_PART_TIME)
-            {
-                EmpHrs = 4;
-            }
-            else
-            {
-                EmpHrs = 0;
-            }
-            EmpWage = EmpHrs * RATE_PER_Hour;
-            Console.WriteLine("Employeewage = " + EmpWage);
-            Console.ReadLine();
-        }
-        private int SwitchCase()
-        {
-            int EmpHrs = 0;
-            int EmpWage = 0;
-
-            int EmpCheck = random.Next(0, 2);
-
-            switch (EmpCheck)
-            {
-                case IS_PART_TIME:
-                    EmpHrs = 4;
-                    break;
-
-                case IS_FULL_TIME:
-                    EmpHrs = 8;
-                    break;
-
-                default:
-                    EmpHrs = 0;
-                    break;
-            }
-            EmpWage = EmpHrs * RATE_PER_Hour;
-            return EmpWage;
-
-        }
-        public void MonthlyWage()
+        
+        private void CalculateMonthlyWage()
         {
             for (int i = 0; i < WORKING_DAYS_PER_MONTH; i++)
-                totalDayWorked += GetAttendance();
-            for (int j = 0; j < totalDayWorked; j++)
-            {
-                monthlyWage =monthlyWage+ SwitchCase();
-            }
-            Console.WriteLine("Monthly Wage: " + monthlyWage);
-            Console.ReadLine();
-
-
+                totalDaysWorked += GetAttendance();
+            for (int j = 0; j < totalDaysWorked; j++)
+                monthlyWage += GetDailyWage();
         }
-        public void Condition()
+
+       
+        public void MeetWageCondition()
         {
-            while (totalDayWorked != 20 && totalHourWorked < 100)
+            while (totalDaysWorked != WORKING_DAYS_PER_MONTH && totalHoursWorked < HOURS_PER_MONTH)
             {
                 Reset();
-                MonthlyWage();
+                CalculateMonthlyWage();
             }
         }
 
+       
         public void Display()
         {
-            Console.WriteLine("Total Hours worked: " + totalHourWorked);
-            Console.WriteLine("Total Days worked: " + totalDayWorked);
+            Console.WriteLine("Total Hours worked: " + totalHoursWorked);
+            Console.WriteLine("Total Days worked: " + totalDaysWorked);
+            Console.WriteLine("Daily Wage: " + dailyWage);
             Console.WriteLine("Monthly Wage: " + monthlyWage);
-            Console.ReadLine();
-
-
         }
 
         public override string ToString()
         {
-            return "Total Hours: " + totalHourWorked + "; Total Days: " + totalDayWorked + "; Total Wage: " + monthlyWage;
+            return $"Total Wage: {TotalWage}; Daily Wage: {DailWage}";
         }
-    }    
+    }
 }

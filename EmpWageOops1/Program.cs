@@ -12,10 +12,19 @@ namespace EmpWageOops1
         {
             Console.WriteLine("Welcome to oops concept");
 
-            EmpWage employee = new EmpWage();
-            employee.Condition();
-            employee.Display();
-            Console.ReadLine();
+            CompanyList companyList = new CompanyList();
+
+          
+            companyList.AddCompany("Reliance");
+            companyList.AddCompany("Tata");
+
+            
+            companyList.AddCompany("Facebook", 50, 22, 120);
+
+            
+            companyList.Display();
+
+            Console.ReadKey();
         }
     }
 }
