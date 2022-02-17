@@ -6,18 +6,16 @@ using System.Threading.Tasks;
 
 namespace EmpWageOops1
 {
-    internal class CompanyList : CompanyWageInterface
+    internal class CompanyList : ICompanyWage
     {
 
         private readonly Dictionary<string, EmpWage> companies;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CompanyList"/> class.
-        /// </summary>
         public CompanyList()
         {
             companies = new();
         }
+
 
         public void AddCompany(string companyName)
         {
@@ -32,6 +30,7 @@ namespace EmpWageOops1
             ComputeWage(companyName);
         }
 
+
         public void ComputeWage(string companyName)
         {
             companies[companyName].MeetWageCondition();
@@ -42,6 +41,17 @@ namespace EmpWageOops1
         {
             foreach (var company in companies.Values)
                 Console.WriteLine("\nCompany: " + company.Company + "\n" + company.ToString() + "\n");
+        }
+
+
+        public void GetTotalWage()
+        {
+            Console.Write("Enter name of Company: ");
+            string companyName = Console.ReadLine();
+            if (companies.ContainsKey(companyName))
+                Console.WriteLine("Total Wage: " + companies[(companyName)].TotalWage);
+            else
+                Console.WriteLine("Company does not exist!");
         }
     }
 }
